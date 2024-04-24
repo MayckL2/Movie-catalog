@@ -15,6 +15,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         entities: [__dirname + '/entities/**'],
         migrations: [__dirname + '/migrations/*.ts'],
         synchronize: false,
+        cache: true
       }),
       inject: [ConfigService],
     }),
