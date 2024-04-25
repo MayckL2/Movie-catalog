@@ -2,8 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } fro
 import { Iparameters, RouteParameter, typeMovie } from 'src/movies/app.model'
 import { MoviesService } from './movies.service';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { MovieEntity } from 'src/db/entities/movie.entity';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 
 @ApiBearerAuth()
 @ApiTags('movies')
@@ -23,16 +22,19 @@ export class MoviesController {
   }
 
   @Get('/:id')
+  @ApiParam({name: 'id', required: true, description: 'Insira o id do filme requerido', schema: { oneOf: [{type: 'string'}, {type: 'integer'}]}})
   async findById(@Param('id') id: string) {
     return await this.movieService.findById(id);
   }
 
   @Put('/:id')
+  @ApiParam({name: 'id', required: true, description: 'Insira o id do filme requerido', schema: { oneOf: [{type: 'string'}, {type: 'integer'}]}})
   async update(@Param() params: RouteParameter, @Body() movie: typeMovie){
     return await this.movieService.update(params.id, movie)
   }
 
   @Delete('/:id')
+  @ApiParam({name: 'id', required: true, description: 'Insira o id do filme requerido', schema: { oneOf: [{type: 'string'}, {type: 'integer'}]}})
   async remove(@Param() params: RouteParameter){
     return await this.movieService.remove(params.id)
   }
