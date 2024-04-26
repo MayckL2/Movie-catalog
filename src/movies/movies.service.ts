@@ -14,6 +14,7 @@ export class MoviesService {
     private readonly movieRepository: Repository<MovieEntity>
   ){}
 
+  // Lista todos os filmes do catalogo, se for passado um parametro é pesquisado os filmes com o respectivo nome
   async listAll(params: Iparameters): Promise<MovieEntity[]> {
     const searchPrams: FindOptionsWhere<MovieEntity> = {}
 
@@ -28,6 +29,7 @@ export class MoviesService {
     return tasksFound
   }
 
+  // Cadastrar novo filme no catalogo
   async create(movie: typeMovie): Promise<MovieEntity> {
     const movieToSave: MovieEntity = {
       name: movie.name,
@@ -41,6 +43,7 @@ export class MoviesService {
     return createdMovie
   }
 
+  // Pesquisa o filme pelo Id, se Id não exisir no banco é retornado um erro
   async findById(id: string): Promise<MovieEntity> {
     const foundMovie = await this.movieRepository.findOne({ where: {id} })
 
@@ -51,6 +54,7 @@ export class MoviesService {
     return foundMovie
   }
 
+  // Atualiza dados do filme exceto o Id caso filme for achado no banco
   async update(id: string, movie: typeMovie) {
     let movieIndex = await this.movieRepository.findOne({ where: {id} })
 
@@ -61,6 +65,7 @@ export class MoviesService {
     return await this.movieRepository.update(id, this.mapDtoToEntity(movie))
   }
 
+  // Remove filme do catalogo e retorna se remoção for bem sucedida
   async remove(id: string) {
     let result = await this.movieRepository.delete(id)
 
@@ -73,6 +78,7 @@ export class MoviesService {
     }
   }
 
+  // Converte objeto typeMovie para entidade MovieEntity
   private mapDtoToEntity(movie: typeMovie): Partial<MovieEntity> {
     return {
       name: movie.name,

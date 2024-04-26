@@ -13,6 +13,7 @@ export class UsersService {
     private usersRepository: Repository<UserEntity>,
   ) {}
 
+  // Cadastrar usuarios caso não existir no banco de dados
   async create(newUser: typeUser) {
     const userRegistred = await this.findByUserName(newUser.username);
 
@@ -29,6 +30,7 @@ export class UsersService {
     return { id, username }
   }
 
+  // Pesquisa usuario pelo nome e se existir no banco é retornado seus dados
   async findByUserName(username: string): Promise<typeUser | null> {
     const userFound = await this.usersRepository.findOne({
       where: { username },

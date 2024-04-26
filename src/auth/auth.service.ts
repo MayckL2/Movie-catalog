@@ -17,6 +17,8 @@ export class AuthService {
         this.jwtExpiration = +this.configService.get<number>('JWT_EXPIRATION_TIME')
     }
 
+    // Logar o usuario verificando username e passaword
+    // Se login bem sucedido é retornado o token para o usuario e o tempo de expiração
     async signIn(username: string, password: string): Promise<AuthResponse>{
         const foundUser = await this.userService.findByUserName(username)
 
